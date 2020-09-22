@@ -4,11 +4,11 @@
 
 #define CASQE_INFINITY_SOLUTIONS -1
 
-double eps = 1e-6;
+double Eps = 1e-6;
 
 int iszero(double a)
 {
-	if ((a < eps && a >= 0) || ((a > -1 * eps) && a <= 0))
+	if ((a < Eps && a >= 0) || ((a > -1 * Eps) && a <= 0))
 		return 1;
 	else
 		return 0;
