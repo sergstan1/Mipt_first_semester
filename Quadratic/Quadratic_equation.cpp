@@ -6,6 +6,46 @@
 
 double Eps = 1e-6;
 
+
+int iszero(double a)
+
+int count_and_solve_quadratic_equation(double a, double b, double c, double* x1, double* x2)
+
+int main()
+{
+	printf("# Solve quadratic equation\n");
+	printf("# (c) Sergey Stanko\n\n");
+
+	printf("# Enter a, b, c :\n");
+
+	double a = 0, b = 0, c = 0;
+	scanf_s("%lf %lf %lf", &a, &b, &c);
+	double x1 = 0, x2 = 0;
+
+	int quantity = count_and_solve_quadratic_equation(a, b, c, &x1, &x2);
+
+	switch (quantity)
+	{
+	case (0):
+		printf("No solutions\n");
+		break;
+	case(1):
+		printf("%lg", x1);
+		break;
+	case(2):
+		printf("%lg %lg", x1, x2);
+		break;
+	case(CASQE_INFINITY_SOLUTIONS):
+		printf("Infinit number of solutions\n");
+		break;
+	default:
+		printf("ERROR\n");
+		break;
+	}
+	return 0;
+}
+
+
 int iszero(double a)
 {
 	if ((a < Eps && a >= 0) || ((a > -1 * Eps) && a <= 0))
@@ -72,37 +112,3 @@ int count_and_solve_quadratic_equation(double a, double b, double c, double* x1,
 	}
 }
 
-
-int main()
-{
-	printf("# Solve quadratic equation\n");
-	printf("# (c) Sergey Stanko\n\n");
-
-	printf("# Enter a, b, c :\n");
-
-	double a = 0, b = 0, c = 0;
-	scanf_s("%lf %lf %lf", &a, &b, &c);
-	double x1 = 0, x2 = 0;
-
-	int quantity = count_and_solve_quadratic_equation(a, b, c, &x1, &x2);
-
-	switch (quantity)
-	{
-	case (0):
-		printf("No solutions\n");
-		break;
-	case(1):
-		printf("%lg", x1);
-		break;
-	case(2):
-		printf("%lg %lg", x1, x2);
-		break;
-	case(CASQE_INFINITY_SOLUTIONS):
-		printf("Infinit number of solutions\n");
-		break;
-	default:
-		printf("ERROR\n");
-		break;
-	}
-	return 0;
-}
