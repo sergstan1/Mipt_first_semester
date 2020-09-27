@@ -6,13 +6,13 @@
 
 double Eps = 1e-6;
 
-void test_count_and_solve_quadratic_equation(void);
+void Test_Count_and_solve_quadratic_equation(void);
 
-int iszero(double a);
+int Iszero(double a);
 
-int count_and_solve_quadratic_equation(double a, double b, double c, double* x1, double* x2);
+int Count_and_solve_quadratic_equation(double a, double b, double c, double* x1, double* x2);
 
-int test_function(const char* name, int expression);
+int Test_function(const char* name, int expression);
 
 int main(void)
 {
@@ -25,7 +25,7 @@ int main(void)
 	scanf_s("%lf %lf %lf", &a, &b, &c);
 	double x1 = 0, x2 = 0;
 
-	int quantity = count_and_solve_quadratic_equation(a, b, c, &x1, &x2);
+	int quantity = Count_and_solve_quadratic_equation(a, b, c, &x1, &x2);
 
 	switch (quantity)
 	{
@@ -42,10 +42,10 @@ int main(void)
 		printf("Infinit number of solutions\n");
 		break;
 	default:
-		printf("ERROR\n");
-		break;
+		printf("ERROR, number of solutions = %d\n", quantity);
+		return 1;
 	}
-	test_count_and_solve_quadratic_equation();
+	Test_Count_and_solve_quadratic_equation();
 	return 0;
 }
 
@@ -61,7 +61,7 @@ int main(void)
 //--------------------------------------------------
 
 
-int iszero(double a)
+int Iszero(double a)
 {
 	if ((a < Eps && a >= 0) || ((a > -1 * Eps) && a <= 0))
 		return 1;
@@ -86,17 +86,17 @@ int iszero(double a)
 //--------------------------------------------------
 
 
-int count_and_solve_quadratic_equation(double a, double b, double c, double* x1, double* x2)
+int Count_and_solve_quadratic_equation(double a, double b, double c, double* x1, double* x2)
 {
 	assert(x1 != NULL);
 	assert(x2 != NULL);
 	assert(x1 != x2);
 
-	if (iszero(a))
+	if (Iszero(a))
 	{
-		if (iszero(b))
+		if (Iszero(b))
 		{
-			if (iszero(c))
+			if (Iszero(c))
 				return CASQE_INFINITY_SOLUTIONS;
 			else
 				return 0;
@@ -113,7 +113,7 @@ int count_and_solve_quadratic_equation(double a, double b, double c, double* x1,
 
 		if (discriminant < 0)
 			return 0;
-		else if (iszero(discriminant))
+		else if (Iszero(discriminant))
 		{
 			*x1 = -b / (2 * a);
 			return 1;
@@ -138,27 +138,27 @@ int count_and_solve_quadratic_equation(double a, double b, double c, double* x1,
 //--------------------------------------------------
 
 
-int test_function(const char* name, int expression)
+int Test_function(const char* name, int expression)
 {
 	if (expression)
 	{
 		printf("test %s passed\n", name);
-		return 1;
+		return true;
 	}
 	else
 	{
 		printf("test %s failed\n", name);
-		return 0;
+		return false;
 	}
 }
 
 
 //--------------------------------------------------
-//! Tests count_and_solve_quadratic_equation
+//! Tests Count_and_solve_quadratic_equation
 //--------------------------------------------------
 
 
-void test_count_and_solve_quadratic_equation(void)
+void Test_Count_and_solve_quadratic_equation(void)
 {
 	printf("Unit tests:\n");
 
@@ -166,20 +166,21 @@ void test_count_and_solve_quadratic_equation(void)
 
 	int number_tests_passed = 0, number_tests_failed = 0;
 
-#define TEST(name, expression) ((test_function(name, expression)) ? ++number_tests_passed : ++number_tests_failed)
+#define TEST(name, expression) ((Test_function(name, expression)) ? ++number_tests_passed : ++number_tests_failed)
 
 	TEST("infinite number of roots",
-		count_and_solve_quadratic_equation(0, 0, 0, &x1, &x2) == CASQE_INFINITY_SOLUTIONS);
+		Count_and_solve_quadratic_equation(0, 0, 0, &x1, &x2) == CASQE_INFINITY_SOLUTIONS);
 	TEST("0 roots, constant equation",
-		count_and_solve_quadratic_equation(0, 0, 1, &x1, &x2) == 0);
+		Count_and_solve_quadratic_equation(0, 0, 1, &x1, &x2) == 0);
 	TEST("0 roots, quadratic equation",
-		count_and_solve_quadratic_equation(1, 1, 1, &x1, &x2) == 0);
+		Count_and_solve_quadratic_equation(1, 1, 1, &x1, &x2) == 0);
 	TEST("1 root, linear equation, number of roots",
-		count_and_solve_quadratic_equation(0, 1, 1, &x1, &x2) == 1);
+		Count_and_solve_quadratic_equation(0, 1, 1, &x1, &x2) == 1);
 
 #undef TEST
 
-	printf("Finished testing count_and_solve_quadratic_equation function: %d tests passed, %d tests failed. The"
+	printf("Finished testing Count_and_solve_quadratic_equation function: %d tests passed, %d tests failed. The"
 		"total number of tests was: %d\n",
 		number_tests_passed, number_tests_failed, number_tests_passed + number_tests_failed);
 }
+
