@@ -11,7 +11,7 @@ int main(void)
 	double a = 0, b = 0, c = 0;
 	int scanf_result = 0;
 
-	scanf_result = scanf_s("%lf %lf %lf", &a, &b, &c);
+	scanf_result = scanf("%lf %lf %lf", &a, &b, &c);
 	Check_scanf(scanf_result, &a, &b, &c);
 	double x1 = 0, x2 = 0;
 
@@ -152,7 +152,7 @@ void Check_scanf(int result, double* a, double* b, double* c)
 			printf("Wrong input. Enter numbers!\n");
 
 			printf("Enter a, b, c:\n");
-			real_number_of_inputs = scanf_s("%lf %lf %lf", a, b, c);
+			real_number_of_inputs = scanf("%lf %lf %lf", a, b, c);
 		}
 	}
 }
