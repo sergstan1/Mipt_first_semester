@@ -46,7 +46,7 @@ char* Lineptr[MAXLINES];
 //!
 //! @param[in] limit maximum length of line
 //! @param[in] fp pointer to file
-//! @param[out] pline pointer to Lineptr
+//! @param[out] pline pointer to line from file
 //!
 //! @return length of line or GPO_WRONGINPUT if input is incorrect
 //!
