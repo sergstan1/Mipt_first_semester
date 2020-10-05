@@ -79,11 +79,15 @@ int Getpoemline(char* pline, const int limit, FILE* fp)
 
 	while ((c = getc(fp)) != EOF && len < limit && (unsigned char)c != '\n')
 	{
-		if ((unsigned char)isalnum(c) || (unsigned char)isprint(c) || (unsigned char)isspace(c))
+		if ((unsigned char)isalnum(c) || (unsigned char)isspace(c))
 		{
 			*pline = c;
 			len++;
 			pline++;
+		}
+		else if ((unsigned char)isprint(c))
+		{
+			;
 		}
 		else
 		{
@@ -133,7 +137,3 @@ int Strcmp(const void *s1, const void *s2)
 	}
 	return *temp1 - *temp2;
 }
-
-
-
-
