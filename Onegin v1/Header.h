@@ -21,7 +21,7 @@ int Number_of_errors = 0;
 
 
 //--------------------------------------------------
-//! If > 1, programm returns an error
+//! if true, programm returns an error
 //--------------------------------------------------
 
 bool Error_warning = false;
