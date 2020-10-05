@@ -15,8 +15,6 @@ int main(void)
 
 	fp = fopen(filename, "r");
 
-	int Numberlines = 0;
-
 	if (fp == NULL)
 	{
 		printf("Cannot read file\n");
@@ -117,7 +115,8 @@ void Writelines(char *Lineptr[], int nlines)
 	int i;
 	for (i = 0; i < nlines; i++)
 		printf("%s\n", Lineptr[i]);
-}
+}
+
 
 int Strcmp(const void *s1, const void *s2)
 {
