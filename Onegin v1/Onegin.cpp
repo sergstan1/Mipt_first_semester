@@ -77,7 +77,7 @@ int Getpoemline(char* pline, const int limit, FILE* fp)
 	int c = '0';
 	int len = 0;
 
-	while ((c = getc(fp)) != EOF && len < limit && c != '\n')
+	while ((c = getc(fp)) != EOF && len < limit && (unsigned char)c != '\n')
 	{
 		if ((unsigned char)isalnum(c) || (unsigned char)isprint(c) || (unsigned char)isspace(c))
 		{
