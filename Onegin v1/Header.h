@@ -5,68 +5,49 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
-#define MAXLEN 10000
-#define MAXLINES 5000
-#define STACKOVERWHELM -100
-#define GPO_WRONGINPUT -10
-#define MAXSIZE 100
+#include <wchar.h>
+#include <locale.h>
 
 
-//--------------------------------------------------
-//! Shows how many errors were in Getpoemline
-//--------------------------------------------------
-
-int Number_of_errors = 0;
+const int MAXLEN = 9000;
+const int MAXLINES = 1000;
+const int STACKOVERWHELM = -100;
+const int GP_WRONGINPUT = -10;
+const int MAXSIZE = 50;
+const int ERROR_END_OF_FILE = -20;
+const int ERROR_FIND_BEGINNING = -30;
 
 
 //--------------------------------------------------
-//! if true, programm returns an error
+//* comparator, compares lines in reverse order
 //--------------------------------------------------
 
-bool Error_warning = false;
-
-
-//--------------------------------------------------
-//! Shows how many lines were readen
-//--------------------------------------------------
-
-int Numberlines = 0;
+int Strcmp_reverse(const void* s1, const void* s2);
 
 
 //--------------------------------------------------
-//! Massive, where we save pointers to lines
-//--------------------------------------------------
-
-char* Lineptr[MAXLINES];
-
-
-//--------------------------------------------------
-//! Saves line from poem
+//! Saves symbols from poem
 //!
-//! @param[in] limit maximum length of line
 //! @param[in] fp pointer to file
-//! @param[out] pline pointer to line from file
+//! @param[out] text massive with symbols
 //!
 //! @return length of line or GPO_WRONGINPUT if input is incorrect
-//!
-//! @note if wrong input prints line where was an error
 //--------------------------------------------------
 
-int Getpoemline(char* pline, const int limit, FILE* fp);
+int Getpoem(FILE* fp, char* Text);
 
 
 //--------------------------------------------------
 //! Reads lines in Lineptr[]
 //!
-//! @param[in] maxlines maximum number of lines
-//! @param[in] *fp pointer to file
+//! @param[in] text - massive with symbols
+//! @param[in] nsym - number of symbols in text
 //! @param[out] Lineptr[] massive where we read
 //! 
-//! @return number of lines or STACKOVERWHELM if too many lines
+//! @return number of lines
 //--------------------------------------------------
 
-int Readlines(char* Lineptr[], const int maxlines, FILE* fp);
+int Getptr(char* Lineptr[], char* text);
 
 
 //--------------------------------------------------
@@ -78,8 +59,7 @@ int Readlines(char* Lineptr[], const int maxlines, FILE* fp);
 //! @return void
 //--------------------------------------------------
 
-void Writelines(char* Lineptr[], int Numberlines);
-
+void Writelines(char* Lineptr[], const int numberlines, FILE* fp);
 
 
 //--------------------------------------------------
@@ -88,3 +68,21 @@ void Writelines(char* Lineptr[], int Numberlines);
 
 int Strcmp(const void *s1, const void *s2);
 
+
+//--------------------------------------------------
+//! Compares result of expression with True
+//! 
+//! @param[in] name name of test
+//! @param[in] expression what we compare
+//! 
+//! @return true or false
+//--------------------------------------------------
+
+bool Test_function(const char* name, int expression);
+
+
+//--------------------------------------------------
+//! Unit tests for Strcmp and Strcmp_reverse
+//--------------------------------------------------
+
+void TestComparators(void);
