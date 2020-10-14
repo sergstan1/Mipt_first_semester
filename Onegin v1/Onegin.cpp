@@ -86,7 +86,7 @@ int main(void)
 			fprintf(fp, "Sorted poem:\n");
 			Writelines(Lineptr, nlines, fp);
 
-			fprintf(fp, "Sorted from back poem:\n");
+			fprintf(fp, "\nSorted from back poem:\n");
 			Writelines(Lineptr_reverse, nlines, fp);
 
 			fprintf(fp, "Original poem:\n");
@@ -125,7 +125,7 @@ int Strcmp(const void* s1, const void* s2)
 	return (*temp2 - *temp1);
 }
 
-void Writelines(char* Lineptr[], const int numberliens,  FILE* fp)
+void Writelines(char* Lineptr[], const int numberliens, FILE* fp)
 {
 	int i;
 
@@ -141,7 +141,7 @@ int Getpoem(FILE* fp, char* text)
 	size_t nsymb = 0;
 
 	text[0] = '\n';
-	
+
 	fseek(fp, 0, 2);
 
 	long end_file = ftell(fp);
