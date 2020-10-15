@@ -86,10 +86,10 @@ int main(void)
 			fprintf(fp, "Sorted poem:\n");
 			Writelines(Lineptr, nlines, fp);
 
-			fprintf(fp, "\nSorted from back poem:\n");
+			fprintf(fp, "\n\nSorted from back poem:\n");
 			Writelines(Lineptr_reverse, nlines, fp);
 
-			fprintf(fp, "Original poem:\n");
+			fprintf(fp, "\n\nOriginal poem:\n");
 			Writelines(Lineptr_original, nlines, fp);
 
 			printf("\nSuccess");
@@ -122,7 +122,7 @@ int Strcmp(const void* s1, const void* s2)
 			return 0;
 		}
 	}
-	return (*temp2 - *temp1);
+	return (*temp1 - *temp2);
 }
 
 void Writelines(char* Lineptr[], const int numberliens, FILE* fp)
@@ -208,7 +208,7 @@ int Strcmp_reverse(const void* s1, const void* s2)
 			return 0;
 		}
 	}
-	return (*temp2 - *temp1);
+	return (*temp1 - *temp2);
 }
 
 bool Test_function(const char* name, int expression)
