@@ -14,7 +14,12 @@ int main(void)
 
 	Push(&stack, 1);
 
+	Push(&stack, 1);
+
+	Verify_Stack(&stack);
+
 	printf("%lf", Pop(&stack));
+
 }
 
 
@@ -155,15 +160,17 @@ bool Verify_Data(Stack* stack)
 {
 	assert(stack != NULL);
 
-	for (int i = 0; i < stack->size; i++)
+	for (int i = 0; i < stack->size - 1; i++)
 	{
 		if (!isfinite(stack->data[i]))
 			return false;
 	}
 	for (int i = stack->size; i < stack->capacity; i++)
 	{
-		if (isfinite(stack->data[i]))
+		if (isfinite(stack->data[i]) && stack->data[i] != 0)
+		{
 			return false;
+		}
 	}
 	return true;
 }
@@ -176,7 +183,8 @@ void Stack_Dtor(Stack* stack)
 	free(stack->data);
 }
 
-void Stack_Dump(const Stack* stack, const StackError* stackerror) {
+void Stack_Dump(const Stack* stack, const StackError* stackerror)
+{
 	assert(stackerror);
 
 	switch (stackerror->code) 
