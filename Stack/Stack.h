@@ -1,4 +1,4 @@
-#define CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -132,3 +132,10 @@ void Verify_Stack(Stack* stack);
 //----------------------------------------------------
 
 bool Verify_Data(Stack* stack);
+
+
+//----------------------------------------------------
+//! Logs what is happening to our stack
+//----------------------------------------------------
+
+void Stack_Dump(const Stack* stack, const StackError* stackerror);
