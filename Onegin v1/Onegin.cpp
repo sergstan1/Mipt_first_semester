@@ -22,16 +22,9 @@ int main(void)
 	}
 	else
 	{
-		char* text = (char*)calloc(MAXLEN, sizeof(char));
+		char* text = {};
 
-		if (text == NULL)
-		{
-			printf("ERROR: could not allocate memory to text\n");
-
-			return 1;
-		}
-
-		int nsymb = Getpoem(fp, text);
+		int nsymb = Getpoem(fp, &text);
 
 		if (nsymb == GP_WRONGINPUT)
 		{
@@ -56,9 +49,12 @@ int main(void)
 
 		else
 		{
-			char** Lineptr_original = (char**)calloc(MAXLINES, sizeof(char*));
-			char** Lineptr_reverse = (char**)calloc(MAXLINES, sizeof(char*));
-			char** Lineptr = (char**)calloc(MAXLINES, sizeof(char*));
+			char symb[] = "\n";
+			int nlines2 = Strcount(text, &symb[0], nsymb);
+
+			char** Lineptr_original = (char**)calloc(nlines2, sizeof(char*));
+			char** Lineptr_reverse = (char**)calloc(nlines2, sizeof(char*));
+			char** Lineptr = (char**)calloc(nlines2, sizeof(char*));
 
 
 			if (Lineptr_original == NULL || Lineptr_reverse == NULL || Lineptr == NULL)
@@ -94,8 +90,6 @@ int main(void)
 
 			printf("\nSuccess");
 			fclose(fp);
-
-			TestComparators;
 
 			return 0;
 		}
@@ -136,11 +130,9 @@ void Writelines(char* Lineptr[], const int numberliens, FILE* fp)
 }
 
 
-int Getpoem(FILE* fp, char* text)
+int Getpoem(FILE* fp, char** text)
 {
 	size_t nsymb = 0;
-
-	text[0] = '\n';
 
 	fseek(fp, 0, 2);
 
@@ -149,9 +141,18 @@ int Getpoem(FILE* fp, char* text)
 	if (end_file == -1L)
 		return (ERROR_END_OF_FILE);
 
+	*text = (char*)calloc(end_file, sizeof(char));
+
+	if (text == NULL)
+	{
+		return STACKOVERWHELM;
+	}
+
+	**text = '\n';
+
 	fseek(fp, 0, 0);
 
-	if ((nsymb = fread(text + 1, sizeof(char), end_file, fp)) <= end_file)
+	if ((nsymb = fread(*text + 1, sizeof(char), end_file, fp)) <= end_file)
 	{
 		if (ferror(fp))
 		{
@@ -161,7 +162,7 @@ int Getpoem(FILE* fp, char* text)
 		{
 			assert(text != NULL);
 
-			text[nsymb + 1] = '\0';
+			*(*text + nsymb + 1) = '\0';
 			return nsymb + 1;
 		}
 	}
@@ -247,4 +248,24 @@ void TestComparators(void)
 
 	if (number_tests_failed != 0)
 		printf("Some units tests have failed! Number of failed tests is %d\n", number_tests_failed);
+}
+
+
+int Strcount(char* str, char* symb, const int nsymb)
+{
+	int i = 0;
+
+	char* temp = (char*)calloc(nsymb, sizeof(str[0]));
+
+	strcpy(temp, str);
+
+	char* pos = strtok(temp, symb);
+
+	while (pos != NULL)
+	{
+		i++;
+		pos = strtok(NULL, symb);
+	}
+	return i;
+
 }
