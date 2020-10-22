@@ -8,13 +8,17 @@ static bool Underflow_Checker = false;
 
 int main(void)
 {
-	Stack stack = {0, 0, 0, 0, 0};
+	Stack stack = { 0, 0, 0, 0, 0 };
 
 	StackCtor(&stack);
 
 	Push(&stack, 1);
 
 	Push(&stack, 1);
+
+	Pop(&stack);
+	Pop(&stack);
+	Pop(&stack);
 
 	Verify_Stack(&stack);
 
@@ -97,18 +101,18 @@ StackElem Pop(Stack* stack)
 				exit(1);
 
 			stack->data = temp2;
-			
+
 		}
 		return temp1;
 	}
 }
 
 
-StackError Stack_Errors(Stack* stack) 
+StackError Stack_Errors(Stack* stack)
 {
 #define STACK_ERROR_WITH_DESCRIPTION(error) {error, #error}
 
-	if (stack == NULL) 
+	if (stack == NULL)
 	{
 		return STACK_ERROR_WITH_DESCRIPTION(NULL_POINTER_TO_STACK);
 	}
@@ -122,19 +126,27 @@ StackError Stack_Errors(Stack* stack)
 		return STACK_ERROR_WITH_DESCRIPTION(NULL_POINTER_TO_DATA);
 	}
 
-	if (!Verify_Data(stack))
-	{
-		return STACK_ERROR_WITH_DESCRIPTION(INVALID_DATA);
-	}
-
 	if (stack->size > stack->capacity)
 	{
 		return STACK_ERROR_WITH_DESCRIPTION(SIZE_GREATER_THAN_CAPACITY);
 	}
 
-	if (!stack->capacity) 
+	if (!stack->capacity)
 	{
 		return STACK_ERROR_WITH_DESCRIPTION(CAPACITY_IS_ZERO);
+	}
+	if (Underflow_Checker == true)
+	{
+		return STACK_ERROR_WITH_DESCRIPTION(STACK_UNDERFLOW);
+	}
+	if (Overflow_Checker == true)
+	{
+		return STACK_ERROR_WITH_DESCRIPTION(STACK_OVERFLOW);
+	}
+
+	if (!Verify_Data(stack))
+	{
+		return STACK_ERROR_WITH_DESCRIPTION(INVALID_DATA);
 	}
 
 	return STACK_ERROR_WITH_DESCRIPTION(OK);
@@ -187,7 +199,7 @@ void Stack_Dump(const Stack* stack, const StackError* stackerror)
 {
 	assert(stackerror);
 
-	switch (stackerror->code) 
+	switch (stackerror->code)
 	{
 	case OK:
 	{
@@ -198,12 +210,13 @@ void Stack_Dump(const Stack* stack, const StackError* stackerror)
 			"\tcapacity = %zu\n"
 			"\tdata [%p]\n"
 			"\t{\n", stackerror->code, stackerror->description, stack, stack->size, stack->capacity, stack->data);
-		for (size_t i = 0; i < stack->size; ++i) logging("\t\t[%zu] = %f\n", i, stack->data[i]);
+		for (int i = 0; i < stack->size; ++i) logging("\t\t[%zu] = %f\n", i, stack->data[i]);
 		logging("\t}\n"
 			"}\n");
 		return;
 	}
 	case DEAD_CANARY:
+	case STACK_UNDERFLOW:
 	case NULL_POINTER_TO_DATA:
 	{
 		logging("STACK_DUMP: status #%d, %s\n"
@@ -215,7 +228,7 @@ void Stack_Dump(const Stack* stack, const StackError* stackerror)
 			"}\n", stackerror->code, stackerror->description, stack, stack->size, stack->capacity, stack->data);
 		return;
 	}
-	case NULL_POINTER_TO_STACK: 
+	case NULL_POINTER_TO_STACK:
 	{
 		logging("STACK_DUMP: status #%d, %s\n"
 			"Stack [%p]\n", stackerror->code, stackerror->description, stack);
