@@ -86,3 +86,16 @@ bool Test_function(const char* name, int expression);
 //--------------------------------------------------
 
 void TestComparators(void);
+
+
+//--------------------------------------------------
+//! Counts number of lines, divided by symbs i text
+//
+// @param[in] str - where we count
+// @param[in] symb by what we divide
+// @param[in] nsymb length of str
+//
+// @return number of lines
+//--------------------------------------------------
+
+int Strcount(char* str, char* symb, const int nsymb)
